@@ -237,9 +237,13 @@ export function getTopWindowLocation() {
   if (inIframe()) {
     let loc;
     try {
-      loc = internal.getAncestorOrigins() || internal.getTopFrameReferrer();
+      loc = interval.getWindowTop().location;
     } catch (e) {
-      logInfo('could not obtain top window location', e);
+      try {
+        loc = internal.getAncestorOrigins() || internal.getTopFrameReferrer();
+      } catch (e) {
+        logInfo('could not obtain top window location', e);
+      }
     }
     if (loc) return parse(loc, {'decodeSearchAsString': true});
   }
